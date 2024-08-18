@@ -19,6 +19,11 @@ class StudentsController extends BaseController
         return view('Student/add');
     }
 
+    public function storeStudentRecord()
+    {
+        // Store the student record
+    }
+
     public function editStudentRecord($id)
     {
         // Show details to be edited in the view.php
