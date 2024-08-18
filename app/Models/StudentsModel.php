@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class StudentsModel extends Model
 {
     protected $table            = 'tbl_students';
     protected $primaryKey       = 'id';
@@ -12,7 +12,7 @@ class UserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['student_name', 'student_id', 'student_course', 'student_section', 'student_batch', 'student_year', 'student_profile'];
+    protected $allowedFields    = ['student_name', 'student_id', 'student_course', 'student_section', 'student_batch', 'student_year', 'student_profile', 'is_deleted'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
