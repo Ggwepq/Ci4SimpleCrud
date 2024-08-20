@@ -90,6 +90,11 @@ vendor/
 # IDE / Development Files
 #-------------------------
 
+#-------------------------
+# Public Images 
+#-------------------------
+public/uploads
+
 # Modules Testing
 _modules/*
 

@@ -56,23 +56,69 @@ class StudentsController extends BaseController
         // Insert data to Database
         $insertStudent->insert($data);
 
-        return redirect()->to('/student')->with('success', 'Student Added Successfully');
+        /*$testData = json_encode($data);*/
+        /**/
+        /*echo $testData;*/
+
+        return redirect()->to('/students')->with('success', 'Student Added Successfully');
     }
 
     public function editStudentRecord($id)
     {
         // Show details of a student to be edited
-        return view('Student/edit');
+
+        $getStudents = new StudentsModel();
+
+        $data['students'] = $getStudents->find($id);
+
+        return view('Student/edit', $data);
     }
 
     public function updateStudentRecord($id)
     {
         // Update the student record on the Database
+
+        $updateStudents = new StudentsModel();
+        $db = db_connect();
+
+        if ($img = $this->request->getFile('studentProfile')) {
+            if ($img->isValid() && ! $img->hasMoved()) {
+                $imgName = $img->getRandomName();
+                $img->move('uploads/', $imgName);
+            }
+        }
+
+        // Check if a file is uploaded, get the name and update it in the db
+        if (!empty($_FILES['studentProfile']['name'])) {
+            $db->query("UPDATE tbl_students SET student_profile = '$imgName' WHERE id = '$id'");
+        }
+
+        // Get updated data from user input and store it to the array
+        $data = array(
+            'student_name' => $this->request->getPost('studentName'),
+            'student_id' => $this->request->getPost('studentID'),
+            'student_course' => $this->request->getPost('studentCourse'),
+            'student_section' => $this->request->getPost('studentSection'),
+            'student_batch' => $this->request->getPost('studentBatch'),
+            'student_year' => $this->request->getPost('studentYear'),
+        );
+
+        $updateStudents->update($id, $data);
+
+        return redirect()->to('/students')->with('success', 'Student Updated Successfully');
     }
 
     public function deleteStudentRecord($id)
     {
         // delete a student record on the Database
 
+        $deleteStudent = new StudentsModel();
+        $hmm = $deleteStudent->find($id);
+
+        $hmm['is_deleted'] = 1;
+
+        $deleteStudent->update($id, $hmm);
+        /*db_connect()->query("UPDATE tbl_students SET is_deleted = 1 WHERE id = '$id'");*/
+        return redirect()->to('/students')->with('success', 'Student Deleted Successfully');
     }
 }
