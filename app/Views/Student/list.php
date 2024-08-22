@@ -2,6 +2,7 @@
 $this->extend('layout/main');
 $this->section('body');
 ?>
+<title>Juan</title>
 
 <?php if (session()->getFlashdata('success')) : ?>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -28,11 +29,11 @@ $this->section('body');
     </div>
 <?php endif; ?>
 
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between align-items-center">
     <h1>Student List</h1>
     <a href="students/create" class="btn btn-primary">Add Student</a>
 </div>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -52,7 +53,7 @@ $this->section('body');
             <?php if ($student['is_deleted'] == 0): ?>
                 <tr>
                     <th scope="row"><?= $inc++; ?></th>
-                    <td><img src="uploads/<?= $student['student_profile'] ?>" alt="alt-<?= $student['student_profile'] ?>" width="50" /> </td>
+                    <td><img class="rounded" src="uploads/<?= $student['student_profile'] ?>" alt="alt-<?= $student['student_profile'] ?>" width="50" /> </td>
                     <td><?= $student['student_name'] ?></td>
                     <td><?= $student['student_id'] ?></td>
                     <td><?= $student['student_course'] ?></td>

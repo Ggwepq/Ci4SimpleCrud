@@ -8,12 +8,20 @@ use App\Models\StudentsModel;
 
 class StudentsController extends BaseController
 {
+
+    public function changeSiteName($siteName)
+    {
+        $data['siteName'] = $siteName;
+        view('layout/main', $data);
+    }
+
     public function listStudentRecord()
     {
         // List all student record 
 
         $getStudents = new StudentsModel();
         $data['students'] = $getStudents->findAll();
+        $this->changeSiteName('Student List');
 
         return view('Student/list', $data);
     }
@@ -23,6 +31,7 @@ class StudentsController extends BaseController
         // Create or Add new student record
 
         $data['studentID'] = '2024_' . uniqid();
+        $this->changeSiteName('Add New Student');
 
         return view('Student/add', $data);
     }
@@ -70,6 +79,7 @@ class StudentsController extends BaseController
         $getStudents = new StudentsModel();
 
         $data['students'] = $getStudents->find($id);
+        $this->changeSiteName('Edit Student');
 
         return view('Student/edit', $data);
     }
